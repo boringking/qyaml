@@ -18,13 +18,43 @@
 
 #include "yaml-cpp/yaml.h"
 
-namespace YAML {
+namespace YAML
+{
+
+/*= QVariant
+ * =========================================================================================*/
+template<>
+struct convert<QVariant> {
+  static Node encode(const QVariant& rhs)
+  {
+    Node node;
+    node = rhs;
+    return node;
+  }
+
+  static bool decode(const Node& node, QVariant& rhs)
+  {
+    if (!node.IsScalar()) {
+      return false;
+    }
+
+//      std::string sstr = node
+    rhs = QVariant(node);
+
+    return true;
+  }
+};
+
+void
+operator>>(const Node node, QVariant q);
+
+void
+operator<<(Node node, const QVariant q);
 
 /*= QString
  * =========================================================================================*/
 template<>
-struct convert<QString>
-{
+struct convert<QString> {
   static Node encode(const QString& rhs)
   {
     Node node;
@@ -59,8 +89,7 @@ operator<<(Node node, const QString q);
  * from a YAML file via yaml-cpp.
  */
 template<>
-struct convert<QByteArray>
-{
+struct convert<QByteArray> {
   static Node encode(const QByteArray& rhs)
   {
     Node node;
@@ -94,8 +123,7 @@ operator<<(Node node, const QByteArray q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QColor>
-{
+struct convert<QColor> {
   static Node encode(const QColor& rhs)
   {
     Node node;
@@ -134,8 +162,7 @@ operator<<(Node node, const QColor q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QFont>
-{
+struct convert<QFont> {
   static Node encode(const QFont& rhs)
   {
     Node node;
@@ -213,8 +240,7 @@ operator<<(Node node, const QFont q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QPoint>
-{
+struct convert<QPoint> {
   static Node encode(const QPoint& rhs)
   {
     Node node;
@@ -249,8 +275,7 @@ operator<<(Node node, const QPoint q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QPointF>
-{
+struct convert<QPointF> {
   static Node encode(const QPointF& rhs)
   {
     Node node;
@@ -285,8 +310,7 @@ operator<<(Node node, const QPointF q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QRect>
-{
+struct convert<QRect> {
   static Node encode(const QRect& rhs)
   {
     Node node;
@@ -325,8 +349,7 @@ operator<<(Node node, const QPoint q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QRectF>
-{
+struct convert<QRectF> {
   static Node encode(const QRectF& rhs)
   {
     Node node;
@@ -365,8 +388,7 @@ operator<<(Node node, const QPoint q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QSize>
-{
+struct convert<QSize> {
   static Node encode(const QSize& rhs)
   {
     Node node;
@@ -401,8 +423,7 @@ operator<<(Node node, const QSize q);
  * YAML file via yaml-cpp.
  */
 template<>
-struct convert<QSizeF>
-{
+struct convert<QSizeF> {
   static Node encode(const QSizeF& rhs)
   {
     Node node;

@@ -11,40 +11,45 @@
 #include <QRectF>
 #include <QSize>
 #include <QSizeF>
+#include <QVector>
 
 #include <yaml-cpp/yaml.h>
 #include "node.h"
 
-namespace YAML {
+namespace YAML
+{
 
 /*!
     \brief Emitter operator << overload for QList<T>
 */
 template<class T>
-inline Emitter& operator<<( Emitter& emitter, const QList<T> v ) {
-    Node node;
-    node = v;
-    return emitter << node;
+inline Emitter& operator<<( Emitter& emitter, const QList<T> v )
+{
+  Node node;
+  node = v;
+  return emitter << node;
 }
 
 /*!
     \brief Emitter operator << overload for QMap(K, V).
 */
 template<class K, class V>
-inline Emitter& operator<<( Emitter& emitter, const QMap<K, V> v ) {
-    Node node;
-    node = v;
-    return emitter << node;
+inline Emitter& operator<<( Emitter& emitter, const QMap<K, V> v )
+{
+  Node node;
+  node = v;
+  return emitter << node;
 }
 
 /*!
     \brief Emitter operator << overload for QVector<T>
 */
 template<class T>
-inline Emitter& operator<<( Emitter& emitter, const QVector<T> v ) {
-    Node node;
-    node = v;
-    return emitter << node;
+inline Emitter& operator<<( Emitter& emitter, const QVector<T> v )
+{
+  Node node;
+  node = v;
+  return emitter << node;
 }
 
 
@@ -55,6 +60,15 @@ inline Emitter&
 operator<<(Emitter& emitter, QString& v)
 {
   return emitter.Write(v.toStdString());
+}
+
+/*!
+    \brief Emitter operator << overload for QVariant
+*/
+inline Emitter&
+operator<<(Emitter& emitter, QVariant& v)
+{
+  return emitter.Write(v.toString().toStdString());
 }
 
 /*!
@@ -165,7 +179,7 @@ operator<<(Emitter& emitter, QPointF& v)
   emitter << YAML::Value << v.y();
   emitter << YAML::EndMap;
   return emitter;
-  }
+}
 
 /*!
     \brief Emitter operator << overload for QRect
@@ -203,7 +217,7 @@ operator<<(Emitter& emitter, QRectF& v)
   emitter << YAML::Value << v.height();
   emitter << YAML::EndMap;
   return emitter;
-  }
+}
 
 /*!
     \brief Emitter operator << overload for QSize
@@ -233,7 +247,7 @@ operator<<(Emitter& emitter, QSizeF& v)
   emitter << YAML::Value << v.height();
   emitter << YAML::EndMap;
   return emitter;
-  }
+}
 
 
 } // end namespace YAML
