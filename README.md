@@ -26,48 +26,48 @@ point I might write some more for these so I left all of the files in.
 
 So far the following Qt classes are covered:
 
-    * QString
-      Creates a standard YAML string value.
-    * QColor
-      Creates a standard YAML map of values.
-    * QFont
-      Creates a standard YAML map of values.
-    * QByteArray
-      Creates a standard YAML binary value.
-    * QBuffer a QByteArray
-    * QList
-      Creates a standard YAML list.
-    * QVector
-      Creates a standard YAML list.
-    * QMap
-      Creates a standard YAML map.
-    * QSet
-      Creates a standard YAML list.
-    * QPoint, QPointF, QRect, QRectF, QSize & QSizeF
-      Creates a standard YAML map of values.
-    * QPixmap saved as a PNG file in a QByteArray, basically a YAML::Binary object.
-    * QImage saved as a PNG pixmap.
-      If you want a different form such as BMP then the Qt suggested
-      method is to create a QBuffer from the QImage then save that.
-      The system below should work for any Qt supported format.
-      ```cpp
-        // To write to the YAML file.
-        YAML::Emitter emitter;
-        
-        QPixmap pixmap = QPixmap::fromImage(img);
-        QByteArray array;
-        QBuffer buffer(&array);
-        buffer.open(QIODevice::WriteOnly);
-        pixmap.save(&buffer, "BMP");
-        
-        // You could alternatively save the QByteArray which is what I do internally.
-        emitter << buffer;  
-        
-        // To read from the YAML file.
-        QBuffer array = image_node.as<QBuffer>();
-        QImage img;
-        img.loadFromData(array.buffer(), "BMP");
-      ```
+- QString
+  Creates a standard YAML string value.
+- QColor
+  Creates a standard YAML map of values.
+- QFont
+  Creates a standard YAML map of values.
+- QByteArray
+  Creates a standard YAML binary value.
+- QBuffer a QByteArray
+- QList
+  Creates a standard YAML list.
+- QVector
+  Creates a standard YAML list.
+- QMap
+  Creates a standard YAML map.
+- QSet
+  Creates a standard YAML list.
+- QPoint, QPointF, QRect, QRectF, QSize & QSizeF
+  Creates a standard YAML map of values.
+- QPixmap saved as a PNG file in a QByteArray, basically a YAML::Binary object.
+- QImage saved as a PNG pixmap.
+  If you want a different form such as BMP then the Qt suggested
+  method is to create a QBuffer from the QImage then save that.
+  The system below should work for any Qt supported format.
+  ```cpp
+    // To write to the YAML file.
+    YAML::Emitter emitter;
+
+    QPixmap pixmap = QPixmap::fromImage(img);
+    QByteArray array;
+    QBuffer buffer(&array);
+    buffer.open(QIODevice::WriteOnly);
+    pixmap.save(&buffer, "BMP");
+
+    // You could alternatively save the QByteArray which is what I do internally.
+    emitter << buffer;
+
+    // To read from the YAML file.
+    QBuffer array = image_node.as<QBuffer>();
+    QImage img;
+    img.loadFromData(array.buffer(), "BMP");
+  ```
       
 Emitter << operator has been overloaded for all of these classes so 
 ```cpp
