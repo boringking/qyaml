@@ -457,6 +457,37 @@ template <> struct convert<QPixmap> {
 void operator>>(const Node node, QPixmap q);
 void operator<<(Node node, const QPixmap q);
 
+/*= QImage
+ * ======================================================================================*/
+/*
+ * Converts QImage to Node and back. Enables QImage to be sent/received from a
+ * YAML file via yaml-cpp.
+ */
+template <> struct convert<QImage> {
+  static Node encode(const QImage &rhs) {
+    Node node;
+    QPixmap pixmap = QPixmap::fromImage(rhs);
+    QByteArray array;
+    QBuffer buffer(&array);
+    buffer.open(QIODevice::WriteOnly);
+    pixmap.save(&buffer, "PNG");
+    node = array;
+    return node;
+  }
+
+  static bool decode(const Node &node, QImage &rhs) {
+    if (!node.IsScalar()) {
+      return false;
+    }
+    QPixmap pixmap = node.as<QPixmap>();
+    rhs = pixmap.toImage();
+    return rhs.isNull();
+  }
+};
+
+void operator>>(const Node node, QPixmap q);
+void operator<<(Node node, const QPixmap q);
+
 } // end of namespace YAML
 
 #endif // NODE_H

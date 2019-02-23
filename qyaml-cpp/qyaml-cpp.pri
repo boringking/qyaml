@@ -16,9 +16,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 INCLUDEPATH += $$PWD
 
 SOURCES += \
-    collection.cpp \
-    comment.cpp \
-    emitter.cpp \
     node.cpp \
     parse.cpp
 

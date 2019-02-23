@@ -19,10 +19,7 @@ There are nine files at present.
     * QYamlCpp        == this is just a Qt style wrapper for qyaml-cpp.h
 
     * parse.cpp
-    * collection.cpp  == This is actually empty as everything is done in the header file
-    * emitter.cpp     == This is actually empty as everything is done in the header file
     * node.cpp
-    * comment.cpp     == This is actually empty as everything is done in the header file
 
 These could probably be placed all in one file or a header/source pair but at some
 point I might write some more for these so I left all of the files in.
@@ -36,7 +33,8 @@ So far the following Qt classes are covered:
     * QFont
       Creates a standard YAML map of values.
     * QByteArray
-      Creates a standard YAML string value.
+      Creates a standard YAML binary value.
+    * QBuffer a QByteArray
     * QList
       Creates a standard YAML list.
     * QVector
@@ -47,6 +45,29 @@ So far the following Qt classes are covered:
       Creates a standard YAML list.
     * QPoint, QPointF, QRect, QRectF, QSize & QSizeF
       Creates a standard YAML map of values.
+    * QPixmap saved as a PNG file in a QByteArray, basically a YAML::Binary object.
+    * QImage saved as a PNG pixmap.
+      If you want a different form such as BMP then the Qt suggested
+      method is to create a QBuffer from the QImage then save that.
+      The system below should work for any Qt supported format.
+      ```cpp
+        // To write to the YAML file.
+        YAML::Emitter emitter;
+        
+        QPixmap pixmap = QPixmap::fromImage(img);
+        QByteArray array;
+        QBuffer buffer(&array);
+        buffer.open(QIODevice::WriteOnly);
+        pixmap.save(&buffer, "BMP");
+        
+        // You could alternatively save the QByteArray which is what I do internally.
+        emitter << buffer;  
+        
+        // To read from the YAML file.
+        QBuffer array = image_node.as<QBuffer>();
+        QImage img;
+        img.loadFromData(array.buffer(), "BMP");
+      ```
       
 Emitter << operator has been overloaded for all of these classes so 
 ```cpp

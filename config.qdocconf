@@ -5,7 +5,7 @@ outputformats = HTML
 outputdir   = docs
 headerdirs  = qyaml-cpp
 sourcedirs  = qyaml-cpp
-exampledirs = .
+exampledirs = ./examples
 imagedirs   = ./images
 
 sources.fileextensions = "*.cpp *.qdoc *.mm *.qml"
