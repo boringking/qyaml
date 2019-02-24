@@ -187,7 +187,7 @@ void operator<<(Node &node, const QPoint &q) {
 void operator>>(const Node &node, QPointF &q) {
   qreal x = node["x"].as<qreal>();
   qreal y = node["y"].as<qreal>();
-  q = QPoint(x, y);
+  q = QPointF(x, y);
 }
 
 /*!
@@ -231,7 +231,7 @@ void operator>>(const Node &node, QRectF &q) {
   qreal top = node["top"].as<qreal>();
   qreal width = node["width"].as<qreal>();
   qreal height = node["height"].as<qreal>();
-  q = QRect(left, top, width, height);
+  q = QRectF(left, top, width, height);
 }
 
 /*!
@@ -289,7 +289,7 @@ void operator<<(Node &node, const QSizeF &q) {
 */
 void operator>>(const Node &node, QPixmap &q) {
   YAML::Binary binary = node.as<YAML::Binary>();
-  const char *data = (const char *)(binary.data());
+  const char *data = reinterpret_cast<const char *>(binary.data());
   int size = int(binary.size());
   const QByteArray array(data, size);
   QPixmap pixmap;
@@ -307,6 +307,24 @@ void operator<<(Node &node, const QPixmap &q) {
   buffer.open(QIODevice::WriteOnly);
   q.save(&buffer, "PNG");
   node = array;
+}
+
+/*= QImage
+ * =========================================================================*/
+/*!
+    \brief operator >> for QImage
+*/
+void operator>>(const Node &node, QImage &q) {
+  QPixmap pixmap = node.as<QPixmap>();
+  q = pixmap.toImage();
+}
+
+/*!
+    \brief operator << for QImage
+*/
+void operator<<(Node &node, const QImage &q) {
+  QPixmap pixmap = QPixmap::fromImage(q);
+  node = pixmap;
 }
 
 } // end namespace YAML
