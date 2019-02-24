@@ -10,16 +10,16 @@ file as they are quite small files.
 
 There are nine files at present.
 
-* qyaml-cpp.h     == This just wraps the other header files in one header file.
-* parse.h
-* collection.h
-* emitter.h
-* node.h
-* comment.h
-* QYamlCpp        == this is just a Qt style wrapper for qyaml-cpp.h
+- qyaml-cpp.h     == This just wraps the other header files in one header file.
+- parse.h
+- collection.h
+- emitter.h
+- node.h
+- comment.h
+- QYamlCpp        == this is just a Qt style wrapper for qyaml-cpp.h
 
-* parse.cpp
-* node.cpp
+- parse.cpp
+- node.cpp
 
 These could probably be placed all in one file or a header/source pair but at some
 point I might write some more for these so I left all of the files in.
@@ -33,8 +33,10 @@ So far the following Qt classes are covered:
 - QFont
   Creates a standard YAML map of values.
 - QByteArray
-  Creates a standard YAML binary value.
-- QBuffer a QByteArray
+  Creates a standard YAML binary value which results in something like:
+  ```image: !!binary "iVBORw0KGgoAAAANSUhEUgAA..."```
+  Remember this can result in a very long line for a large image.
+- QBuffer Creates a QByteArray internally.
 - QList
   Creates a standard YAML list.
 - QVector
@@ -44,9 +46,9 @@ So far the following Qt classes are covered:
 - QSet
   Creates a standard YAML list.
 - QPoint, QPointF, QRect, QRectF, QSize & QSizeF
-  Creates a standard YAML map of values.
-- QPixmap saved as a PNG file in a QByteArray, basically a YAML::Binary object.
-- QImage saved as a PNG pixmap.
+  Creates standard YAML maps of values.
+- QPixmap saved as a PNG file in a QByteArray.
+- QImage saved as a PNG QPixmap which is waht the Qt Serialise page suggests.
   If you want a different form such as BMP then the Qt suggested
   method is to create a QBuffer from the QImage then save that.
   The system below should work for any Qt supported format.
