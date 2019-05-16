@@ -9,13 +9,17 @@
 
 namespace YAML {
 
-YAML_CPP_API Node Load(const QString &input);
+YAML_CPP_API Node
+Load(const QString& input);
 
-YAML_CPP_API Node Load(const QByteArray &input);
+YAML_CPP_API Node
+Load(const QByteArray& input);
 
-YAML_CPP_API Node LoadFile(const QString &filename);
+YAML_CPP_API Node
+LoadFile(const QString& filename);
 
-YAML_CPP_API Node LoadFile(QFile &file);
+YAML_CPP_API Node
+LoadFile(QFile& file);
 
 } // end of namespace YAML
 

@@ -16,6 +16,7 @@
 #include <QVector>
 
 #include "node.h"
+#include "collection.h"
 #include <yaml-cpp/yaml.h>
 
 namespace YAML {
@@ -23,8 +24,9 @@ namespace YAML {
 /*!
     \brief Emitter operator << overload for QList<T>
 */
-template <class T>
-inline Emitter &operator<<(Emitter &emitter, const QList<T> v) {
+template<class T>
+inline Emitter& operator<<(Emitter& emitter, const QList<T> v)
+{
   Node node;
   node = v;
   return emitter << node;
@@ -33,8 +35,9 @@ inline Emitter &operator<<(Emitter &emitter, const QList<T> v) {
 /*!
     \brief Emitter operator << overload for QMap(K, V).
 */
-template <class K, class V>
-inline Emitter &operator<<(Emitter &emitter, const QMap<K, V> v) {
+template<class K, class V>
+inline Emitter& operator<<(Emitter& emitter, const QMap<K, V> v)
+{
   Node node;
   node = v;
   return emitter << node;
@@ -43,8 +46,9 @@ inline Emitter &operator<<(Emitter &emitter, const QMap<K, V> v) {
 /*!
     \brief Emitter operator << overload for QVector<T>
 */
-template <class T>
-inline Emitter &operator<<(Emitter &emitter, const QVector<T> v) {
+template<class T>
+inline Emitter& operator<<(Emitter& emitter, const QVector<T> v)
+{
   Node node;
   node = v;
   return emitter << node;
@@ -53,31 +57,61 @@ inline Emitter &operator<<(Emitter &emitter, const QVector<T> v) {
 /*!
     \brief Emitter operator << overload for QString
 */
-inline Emitter &operator<<(Emitter &emitter, QString &v) {
+inline Emitter& operator<<(Emitter& emitter, QString& v)
+{
   return emitter.Write(v.toStdString());
+}
+
+/*!
+    \brief Emitter operator << overload for const \\\\QString
+*/
+inline Emitter& operator<<(Emitter& emitter, const QString& v)
+{
+  return emitter.Write(QString(v).toStdString());
+}
+
+/*!
+    \brief Emitter operator << overload for QStringList
+*/
+inline Emitter& operator<<(Emitter& emitter, QStringList& v)
+{
+  std::list<std::string> list;
+
+  emitter << YAML::BeginSeq;
+
+  for (QString s : v) {
+    emitter << s;
+  }
+
+  emitter << YAML::EndSeq;
+
+  return emitter;
 }
 
 /*!
     \brief Emitter operator << overload for QVariant
 */
-inline Emitter &operator<<(Emitter &emitter, QVariant &v) {
+inline Emitter& operator<<(Emitter& emitter, QVariant& v)
+{
   return emitter.Write(v.toString().toStdString());
 }
 
 /*!
     \brief Emitter operator << overload for QByteArray
 */
-inline Emitter &operator<<(Emitter &emitter, QByteArray &v) {
+inline Emitter& operator<<(Emitter& emitter, QByteArray& v)
+{
   size_t size = size_t(v.size());
-  const char *data = v.constData();
-  return emitter << YAML::Binary(reinterpret_cast<const unsigned char *>(data),
+  const char* data = v.constData();
+  return emitter << YAML::Binary(reinterpret_cast<const unsigned char*>(data),
                                  size_t(size));
 }
 
 /*!
     \brief Emitter operator << overload for QBuffer
 */
-inline Emitter &operator<<(Emitter &emitter, QBuffer &v) {
+inline Emitter& operator<<(Emitter& emitter, QBuffer& v)
+{
   QByteArray data = v.buffer();
   return emitter << data;
 }
@@ -86,7 +120,8 @@ inline Emitter &operator<<(Emitter &emitter, QBuffer &v) {
     \brief Emitter operator << overload for QPixmap.
      Only saves QPixmap as a PNG byte array.
 */
-inline Emitter &operator<<(Emitter &emitter, QPixmap &v) {
+inline Emitter& operator<<(Emitter& emitter, QPixmap& v)
+{
   QByteArray array;
   QBuffer buffer(&array);
   buffer.open(QIODevice::WriteOnly);
@@ -98,7 +133,8 @@ inline Emitter &operator<<(Emitter &emitter, QPixmap &v) {
 /*!
     \brief Emitter operator << overload for QColor
 */
-inline Emitter &operator<<(Emitter &emitter, QColor &v) {
+inline Emitter& operator<<(Emitter& emitter, QColor& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "red";
   emitter << YAML::Value << v.red();
@@ -115,7 +151,8 @@ inline Emitter &operator<<(Emitter &emitter, QColor &v) {
 /*!
     \brief Emitter operator << overload for QFont
 */
-inline Emitter &operator<<(Emitter &emitter, QFont &v) {
+inline Emitter& operator<<(Emitter& emitter, QFont& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "family";
   emitter << YAML::Value << v.family().toStdString();
@@ -165,7 +202,8 @@ inline Emitter &operator<<(Emitter &emitter, QFont &v) {
 /*!
     \brief Emitter operator << overload for QPoint
 */
-inline Emitter &operator<<(Emitter &emitter, QPoint &v) {
+inline Emitter& operator<<(Emitter& emitter, QPoint& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "x";
   emitter << YAML::Value << v.x();
@@ -178,7 +216,8 @@ inline Emitter &operator<<(Emitter &emitter, QPoint &v) {
 /*!
     \brief Emitter operator << overload for QPointF
 */
-inline Emitter &operator<<(Emitter &emitter, QPointF &v) {
+inline Emitter& operator<<(Emitter& emitter, QPointF& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "x";
   emitter << YAML::Value << v.x();
@@ -191,7 +230,8 @@ inline Emitter &operator<<(Emitter &emitter, QPointF &v) {
 /*!
     \brief Emitter operator << overload for QRect
 */
-inline Emitter &operator<<(Emitter &emitter, QRect &v) {
+inline Emitter& operator<<(Emitter& emitter, QRect& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "left";
   emitter << YAML::Value << v.left();
@@ -208,7 +248,8 @@ inline Emitter &operator<<(Emitter &emitter, QRect &v) {
 /*!
     \brief Emitter operator << overload for QRectF
 */
-inline Emitter &operator<<(Emitter &emitter, QRectF &v) {
+inline Emitter& operator<<(Emitter& emitter, QRectF& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "left";
   emitter << YAML::Value << v.left();
@@ -225,7 +266,8 @@ inline Emitter &operator<<(Emitter &emitter, QRectF &v) {
 /*!
     \brief Emitter operator << overload for QSize
 */
-inline Emitter &operator<<(Emitter &emitter, QSize &v) {
+inline Emitter& operator<<(Emitter& emitter, QSize& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "width";
   emitter << YAML::Value << v.width();
@@ -238,7 +280,8 @@ inline Emitter &operator<<(Emitter &emitter, QSize &v) {
 /*!
     \brief Emitter operator << overload for QSizeF
 */
-inline Emitter &operator<<(Emitter &emitter, QSizeF &v) {
+inline Emitter& operator<<(Emitter& emitter, QSizeF& v)
+{
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "width";
   emitter << YAML::Value << v.width();

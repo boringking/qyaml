@@ -23,8 +23,7 @@ namespace YAML {
 template<class T>
 struct convert<QList<T>>
 {
-  static Node encode(const QList<T>& rhs)
-  {
+  static Node encode(const QList<T>& rhs) {
     Node node(NodeType::Sequence);
 
     std::list<T> slist = rhs.toStdList();
@@ -33,8 +32,7 @@ struct convert<QList<T>>
     return node;
   }
 
-  static bool decode(const Node& node, QList<T>& rhs)
-  {
+  static bool decode(const Node& node, QList<T>& rhs) {
     if (!node.IsSequence()) {
       return false;
     }
@@ -47,8 +45,7 @@ struct convert<QList<T>>
 };
 
 template<class T>
-inline void
-operator>>(const Node& node, QList<T>& q)
+inline void operator>>(const Node& node, QList<T>& q)
 {
   std::list<T> slist;
   slist = node.as<std::list<T>>();
@@ -58,8 +55,7 @@ operator>>(const Node& node, QList<T>& q)
 template<class K, class V>
 struct convert<QMap<K, V>>
 {
-  static Node encode(const QMap<K, V>& rhs)
-  {
+  static Node encode(const QMap<K, V>& rhs) {
     Node node(NodeType::Map);
 
     std::map<K, V> smap = rhs.toStdMap();
@@ -68,8 +64,7 @@ struct convert<QMap<K, V>>
     return node;
   }
 
-  static bool decode(const Node& node, QMap<K, V>& rhs)
-  {
+  static bool decode(const Node& node, QMap<K, V>& rhs) {
     if (!node.IsMap()) {
       return false;
     }
@@ -82,8 +77,7 @@ struct convert<QMap<K, V>>
 };
 
 template<class K, class V>
-inline void
-operator>>(const Node& node, QMap<K, V>& q)
+inline void operator>>(const Node& node, QMap<K, V>& q)
 {
   std::map<K, V> smap;
   smap = node.as<std::map<K, V>>();
@@ -94,8 +88,7 @@ operator>>(const Node& node, QMap<K, V>& q)
 template<class T>
 struct convert<QVector<T>>
 {
-  static Node encode(const QVector<T>& rhs)
-  {
+  static Node encode(const QVector<T>& rhs) {
     Node node(NodeType::Sequence);
 
     std::vector<T> svector = rhs.toStdVector();
@@ -104,8 +97,7 @@ struct convert<QVector<T>>
     return node;
   }
 
-  static bool decode(const Node& node, QVector<T>& rhs)
-  {
+  static bool decode(const Node& node, QVector<T>& rhs) {
     if (!node.IsSequence()) {
       return false;
     }
@@ -118,8 +110,7 @@ struct convert<QVector<T>>
 };
 
 template<class T>
-inline void
-operator>>(const Node& node, QVector<T>& q)
+inline void operator>>(const Node& node, QVector<T>& q)
 {
   std::vector<T> svector;
   svector = node.as<std::vector<T>>();
@@ -130,8 +121,7 @@ operator>>(const Node& node, QVector<T>& q)
 template<class T>
 struct convert<QSet<T>>
 {
-  static Node encode(const QSet<T>& rhs)
-  {
+  static Node encode(const QSet<T>& rhs) {
     Node node(NodeType::Sequence);
 
     std::list<T> slist = rhs.toList();
@@ -140,8 +130,7 @@ struct convert<QSet<T>>
     return node;
   }
 
-  static bool decode(const Node& node, QSet<T>& rhs)
-  {
+  static bool decode(const Node& node, QSet<T>& rhs) {
     if (!node.IsSequence()) {
       return false;
     }
@@ -154,8 +143,7 @@ struct convert<QSet<T>>
 };
 
 template<class T>
-inline void
-operator>>(const Node& node, QSet<T>& q)
+inline void operator>>(const Node& node, QSet<T>& q)
 {
   std::list<T> slist = node.as<std::list<T>>();
   q = QSet<T>::fromList(QList<T>::fromStdList(slist));

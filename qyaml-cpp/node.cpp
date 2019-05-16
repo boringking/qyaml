@@ -17,7 +17,9 @@ namespace YAML {
 /*!
     \brief operator >> for QString
 */
-void operator>>(const Node &node, QString &q) {
+void
+operator>>(const Node& node, QString& q)
+{
   std::string sstr;
   sstr = node.as<std::string>();
   q = QString(sstr.c_str());
@@ -26,7 +28,9 @@ void operator>>(const Node &node, QString &q) {
 /*!
     \brief operator << for QString
 */
-void operator<<(Node &node, const QString &q) {
+void
+operator<<(Node& node, const QString& q)
+{
   std::string sstr = q.toStdString();
   node = sstr;
 }
@@ -42,9 +46,11 @@ void operator<<(Node &node, const QString &q) {
 /*!
     \brief operator >> for QByteArray
 */
-void operator>>(const Node &node, QByteArray &q) {
+void
+operator>>(const Node& node, QByteArray& q)
+{
   YAML::Binary binary = node.as<YAML::Binary>();
-  const char *data = reinterpret_cast<const char *>(binary.data());
+  const char* data = reinterpret_cast<const char*>(binary.data());
   int size = int(binary.size());
   q = QByteArray(data, size);
 }
@@ -52,9 +58,11 @@ void operator>>(const Node &node, QByteArray &q) {
 /*!
     \brief operator << for QByteArray
 */
-void operator<<(Node &node, const QByteArray &q) {
-  const char *data = q.constData();
-  YAML::Binary binary(reinterpret_cast<const unsigned char *>(data),
+void
+operator<<(Node& node, const QByteArray& q)
+{
+  const char* data = q.constData();
+  YAML::Binary binary(reinterpret_cast<const unsigned char*>(data),
                       size_t(q.size()));
   node = binary;
 }
@@ -69,7 +77,9 @@ void operator<<(Node &node, const QByteArray &q) {
 /*!
     \brief operator >> for QBuffer
 */
-void operator>>(const Node &node, QBuffer &q) {
+void
+operator>>(const Node& node, QBuffer& q)
+{
   QByteArray array = node.as<QByteArray>();
   q.setBuffer(&array);
 }
@@ -77,7 +87,9 @@ void operator>>(const Node &node, QBuffer &q) {
 /*!
     \brief operator << for QBuffer
 */
-void operator<<(Node &node, const QBuffer &q) {
+void
+operator<<(Node& node, const QBuffer& q)
+{
   QByteArray data = q.buffer();
   node = data;
 }
@@ -87,7 +99,9 @@ void operator<<(Node &node, const QBuffer &q) {
 /*!
     \brief operator >> for QColor
 */
-void operator>>(const Node &node, QColor &q) {
+void
+operator>>(const Node& node, QColor& q)
+{
   int red = node["red"].as<int>();
   int green = node["green"].as<int>();
   int blue = node["blue"].as<int>();
@@ -98,7 +112,9 @@ void operator>>(const Node &node, QColor &q) {
 /*!
     \brief operator << for QColor
 */
-void operator<<(Node &node, const QColor &q) {
+void
+operator<<(Node& node, const QColor& q)
+{
   node["red"] = q.red();
   node["green"] = q.green();
   node["blue"] = q.blue();
@@ -108,13 +124,15 @@ void operator<<(Node &node, const QColor &q) {
 /*!
     \brief operator >> for QFont
 */
-void operator>>(const Node &node, QFont &q) {
+void
+operator>>(const Node& node, QFont& q)
+{
   q.setFamily(node["family"].as<QString>());
   q.setBold(node["bold"].as<bool>());
   q.setCapitalization(QFont::Capitalization(node["capitalization"].as<int>()));
   q.setFixedPitch(node["fixedpitch"].as<bool>());
   q.setHintingPreference(
-      QFont::HintingPreference(node["hinting preference"].as<int>()));
+    QFont::HintingPreference(node["hinting preference"].as<int>()));
   q.setItalic(node["italic"].as<bool>());
   q.setKerning(node["kerning"].as<bool>());
   q.setLetterSpacing(QFont::SpacingType(node["letter spacing type"].as<int>()),
@@ -136,7 +154,9 @@ void operator>>(const Node &node, QFont &q) {
 /*!
     \brief operator << for QFont
 */
-void operator<<(Node &node, const QFont &q) {
+void
+operator<<(Node& node, const QFont& q)
+{
   node["family"] = q.family();
   node["bold"] = q.bold();
   node["capitalization"] = int(q.capitalization());
@@ -165,7 +185,9 @@ void operator<<(Node &node, const QFont &q) {
 /*!
     \brief operator >> for QPoint
 */
-void operator>>(const Node &node, QPoint &q) {
+void
+operator>>(const Node& node, QPoint& q)
+{
   int x = node["x"].as<int>();
   int y = node["y"].as<int>();
   q = QPoint(x, y);
@@ -174,7 +196,9 @@ void operator>>(const Node &node, QPoint &q) {
 /*!
     \brief operator << for QPoint
 */
-void operator<<(Node &node, const QPoint &q) {
+void
+operator<<(Node& node, const QPoint& q)
+{
   node["x"] = q.x();
   node["y"] = q.y();
 }
@@ -184,7 +208,9 @@ void operator<<(Node &node, const QPoint &q) {
 /*!
     \brief operator >> for QPointF
 */
-void operator>>(const Node &node, QPointF &q) {
+void
+operator>>(const Node& node, QPointF& q)
+{
   qreal x = node["x"].as<qreal>();
   qreal y = node["y"].as<qreal>();
   q = QPointF(x, y);
@@ -193,7 +219,9 @@ void operator>>(const Node &node, QPointF &q) {
 /*!
     \brief operator << for QPointF
 */
-void operator<<(Node &node, const QPointF &q) {
+void
+operator<<(Node& node, const QPointF& q)
+{
   node["x"] = q.x();
   node["y"] = q.y();
 }
@@ -203,7 +231,9 @@ void operator<<(Node &node, const QPointF &q) {
 /*!
     \brief operator >> for QRect
 */
-void operator>>(const Node &node, QRect &q) {
+void
+operator>>(const Node& node, QRect& q)
+{
   int left = node["left"].as<int>();
   int top = node["top"].as<int>();
   int width = node["width"].as<int>();
@@ -214,7 +244,9 @@ void operator>>(const Node &node, QRect &q) {
 /*!
     \brief operator << for QRect
 */
-void operator<<(Node &node, const QRect &q) {
+void
+operator<<(Node& node, const QRect& q)
+{
   node["left"] = q.left();
   node["top"] = q.top();
   node["width"] = q.width();
@@ -226,7 +258,9 @@ void operator<<(Node &node, const QRect &q) {
 /*!
     \brief operator >> for QRectF
 */
-void operator>>(const Node &node, QRectF &q) {
+void
+operator>>(const Node& node, QRectF& q)
+{
   qreal left = node["left"].as<qreal>();
   qreal top = node["top"].as<qreal>();
   qreal width = node["width"].as<qreal>();
@@ -237,7 +271,9 @@ void operator>>(const Node &node, QRectF &q) {
 /*!
     \brief operator << for QRectF
 */
-void operator<<(Node &node, const QRectF &q) {
+void
+operator<<(Node& node, const QRectF& q)
+{
   node["left"] = q.left();
   node["top"] = q.top();
   node["width"] = q.width();
@@ -249,7 +285,9 @@ void operator<<(Node &node, const QRectF &q) {
 /*!
     \brief operator >> for QSize
 */
-void operator>>(const Node &node, QSize &q) {
+void
+operator>>(const Node& node, QSize& q)
+{
   int width = node["width"].as<int>();
   int height = node["height"].as<int>();
   q = QSize(width, height);
@@ -258,7 +296,9 @@ void operator>>(const Node &node, QSize &q) {
 /*!
     \brief operator << for QSize
 */
-void operator<<(Node &node, const QSize &q) {
+void
+operator<<(Node& node, const QSize& q)
+{
   node["width"] = q.width();
   node["height"] = q.height();
 }
@@ -268,7 +308,9 @@ void operator<<(Node &node, const QSize &q) {
 /*!
     \brief operator >> for QSizeF
 */
-void operator>>(const Node &node, QSizeF &q) {
+void
+operator>>(const Node& node, QSizeF& q)
+{
   qreal width = node["width"].as<qreal>();
   qreal height = node["height"].as<qreal>();
   q = QSizeF(width, height);
@@ -277,7 +319,9 @@ void operator>>(const Node &node, QSizeF &q) {
 /*!
     \brief operator << for QSizeF
 */
-void operator<<(Node &node, const QSizeF &q) {
+void
+operator<<(Node& node, const QSizeF& q)
+{
   node["width"] = q.width();
   node["height"] = q.height();
 }
@@ -287,9 +331,11 @@ void operator<<(Node &node, const QSizeF &q) {
 /*!
     \brief operator >> for QPixmap
 */
-void operator>>(const Node &node, QPixmap &q) {
+void
+operator>>(const Node& node, QPixmap& q)
+{
   YAML::Binary binary = node.as<YAML::Binary>();
-  const char *data = reinterpret_cast<const char *>(binary.data());
+  const char* data = reinterpret_cast<const char*>(binary.data());
   int size = int(binary.size());
   const QByteArray array(data, size);
   QPixmap pixmap;
@@ -301,7 +347,9 @@ void operator>>(const Node &node, QPixmap &q) {
 /*!
     \brief operator << for QPixmap
 */
-void operator<<(Node &node, const QPixmap &q) {
+void
+operator<<(Node& node, const QPixmap& q)
+{
   QByteArray array;
   QBuffer buffer(&array);
   buffer.open(QIODevice::WriteOnly);
@@ -314,7 +362,9 @@ void operator<<(Node &node, const QPixmap &q) {
 /*!
     \brief operator >> for QImage
 */
-void operator>>(const Node &node, QImage &q) {
+void
+operator>>(const Node& node, QImage& q)
+{
   QPixmap pixmap = node.as<QPixmap>();
   q = pixmap.toImage();
 }
@@ -322,7 +372,9 @@ void operator>>(const Node &node, QImage &q) {
 /*!
     \brief operator << for QImage
 */
-void operator<<(Node &node, const QImage &q) {
+void
+operator<<(Node& node, const QImage& q)
+{
   QPixmap pixmap = QPixmap::fromImage(q);
   node = pixmap;
 }
