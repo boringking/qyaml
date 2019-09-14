@@ -1,11 +1,12 @@
 # ***************************************************************************
-# Copyright (c) 2013-2015, Simon Meaden
+# Copyright (c) 2013-2019, Simon Meaden
 # ***************************************************************************
 #
-# Simonsoft - QWorkbook Library
+# Simonsoft - QYaml-Cpp
 # Config PRI File
 #
-# QWorkbook is intended as a simple spreadsheet based on QTableView.
+# qyaml-cpp is a set of extensions to yaml-cpp to handle some common
+# Qt 5 types such a QString, QPint and others.
 #
 # This code is licensed under the GPL Version 3.0
 # ***************************************************************************

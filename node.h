@@ -1,3 +1,13 @@
+/*
+  Copyright (c) 2013-2019, Simon Meaden
+
+  Simonsoft - QYaml-Cpp
+
+  qyaml-cpp is a set of extensions to yaml-cpp to handle some common
+  Qt 5 types such a QString, QPint and others.
+
+  This code is licensed under the GPL Version 3.0
+*/
 #ifndef NODE_H
 #define NODE_H
 
